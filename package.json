@@ -19,6 +19,7 @@
   "homepage": "https://github.com/CharlieBoyer/Github-Deliverer#readme",
   "dependencies": {
     "@octokit/rest": "^18.1.0",
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "octonode": "^0.10.0"
   }
 }
