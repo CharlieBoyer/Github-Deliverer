@@ -1,3 +1,11 @@
+##
+## .gitignore
+## Prevent matching files or folder to be tracked by Git
+##
+
+# Local config file
+config.json
+
 # Logs
 logs
 *.log
