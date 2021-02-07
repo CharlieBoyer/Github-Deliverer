@@ -9,14 +9,25 @@ const Discord = require('discord.js');
 const config = require("../config.json");
 const client = new Discord.Client();
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
+const Status = {
+    LAUNCH: 0,
+    INIT: 1,
+    READY: 2,
+}
 
-client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.reply('Pong!');
-  }
-});
+function main()
+{
+    var currentState = Status.LAUNCH;
+
+    console.log(`Logged in as ${client.user.tag}!`);
+
+    client.on('message', msg => {
+        if (msg.content === 'ping') {
+            msg.reply('Pong!');
+        }
+    });
+}
+
+client.on('ready', main);
 
 client.login(config.auth_token);
