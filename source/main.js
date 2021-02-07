@@ -19,7 +19,7 @@ function main()
 {
     var currentState = Status.LAUNCH;
 
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`\n> ${client.user.tag} now up!`);
 
     client.on('message', msg => {
         if (msg.content === 'ping') {
