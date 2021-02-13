@@ -3,8 +3,11 @@
 ## Prevent matching files or folder to be tracked by Git
 ##
 
-# Local config file
+# Local config file (auth_token)
 config.json
+
+# build folder
+build
 
 # Logs
 logs
