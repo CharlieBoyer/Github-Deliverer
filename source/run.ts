@@ -15,19 +15,19 @@ const Status = {
     READY: 2
 }
 
-function main()
+function run()
 {
-    var currentState = Status.LAUNCH;
+    let currentState = Status.LAUNCH;
 
     console.log(`\n> ${client.user.tag} now up!\n`);
 
     client.on('message', msg => {
-        if (msg.content === 'ping') {
+        if (msg.content === 'ping' || msg.content === "Ping") {
             msg.reply('Pong!');
         }
     });
 }
 
-client.on('ready', main);
+client.once('ready', run);
 
 client.login(Config.auth_token);
