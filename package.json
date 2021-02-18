@@ -2,8 +2,9 @@
   "name": "github-deliverer",
   "version": "1.0.0",
   "description": "A Discord app interacting with Github API",
-  "main": "run.js",
+  "main": "./build/run.js",
   "scripts": {
+    "run": "nodemon --inspect ./build/run.js",
     "test": "mocha"
   },
   "repository": {
