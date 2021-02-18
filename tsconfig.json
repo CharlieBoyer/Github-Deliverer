@@ -10,7 +10,6 @@
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": false,
         "noImplicitThis": true,
-        "target": "es2020"
     },
 
     "include": [
