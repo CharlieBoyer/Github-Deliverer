@@ -2,9 +2,9 @@
   "name": "github-deliverer",
   "version": "1.0.0",
   "description": "A Discord app interacting with Github API",
-  "main": "main.js",
+  "main": "run.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
