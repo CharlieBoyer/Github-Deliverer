@@ -7,7 +7,7 @@
 import * as Discord from "discord.js"
 import * as Config from "./config.json"
 
-const client = new Discord.Client();
+export const client: Discord.Client = new Discord.Client();
 
 function botMentionned(message: Discord.Message): boolean
 {
@@ -19,13 +19,13 @@ function botMentionned(message: Discord.Message): boolean
     }
 }
 
-function run()
+function run(): void
 {
     console.log(`\n> ${client.user.tag} now up!\n`);
 
-    client.on('message', msg => {
-        if (botMentionned(msg)) {
-            msg.reply("It's me !");
+    client.on('message', message => {
+        if (botMentionned(message)) {
+            message.reply("It's me !");
         }
     });
 }
