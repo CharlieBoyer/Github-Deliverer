@@ -9,21 +9,23 @@ import * as Config from "./config.json"
 
 const client = new Discord.Client();
 
-const Status = {
-    LAUNCH: 0,
-    INIT: 1,
-    READY: 2
+function botMentionned(message: Discord.Message): boolean
+{
+    if (message.mentions.users.find(user => user.tag === client.user.tag)) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 function run()
 {
-    let currentState = Status.LAUNCH;
-
     console.log(`\n> ${client.user.tag} now up!\n`);
 
     client.on('message', msg => {
-        if (msg.content === 'ping' || msg.content === "Ping") {
-            msg.reply('Pong!');
+        if (botMentionned(msg)) {
+            msg.reply("It's me !");
         }
     });
 }
