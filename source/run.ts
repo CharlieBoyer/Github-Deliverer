@@ -1,6 +1,6 @@
 /*
 ** Github Deliverer
-** Bot launch and loggin to Discord server
+** Bot launch and log-in it to Discord servers
 ** Author: charlieBoyer
 */
 
@@ -32,4 +32,6 @@ function run(): void
 
 client.once('ready', run);
 
-client.login(Config.auth_token);
+client.login(Config.auth_token)
+    .then(str => console.log(str))
+    .catch(str => console.log(`Error: Discord login failed\n> ${str}`));
