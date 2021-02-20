@@ -5,7 +5,7 @@
 */
 
 import * as Discord from "discord.js"
-import * as Config from "./config.json"
+import * as Config from "./.config.json"
 
 export const client: Discord.Client = new Discord.Client();
 
