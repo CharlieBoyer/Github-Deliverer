@@ -5,6 +5,9 @@
 
 # Local config file (auth_token)
 config.json
+.config.json
+config
+.config
 
 # build folder
 build
