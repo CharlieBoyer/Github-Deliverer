@@ -7,17 +7,27 @@
 import { Message } from "discord.js";
 import { mention_code } from "./.config.json";
 
-export type Command = {
+export type UserInput = {
     name: String,
     args: String[];
 }
 
-export function getCommand(message: Message): Command
+export function botMentionned(message: Message): boolean
 {
-    let args: String[] = message.content.slice(mention_code.length).trim().split(" ");
+    if (message.mentions.users.find(user => user.tag === message.client.user.tag)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+export function getUserInput(message: Message): UserInput
+{
+    let args: String[] = message.content.slice(mention_code.length).trim().split(/ +/);
     let cmd: String = args.shift().toLowerCase();
 
-    let command: Command = { name: cmd, args: args };
+    let userInput: UserInput = { name: cmd, args: args };
 
-    return command;
+    return userInput;
 }

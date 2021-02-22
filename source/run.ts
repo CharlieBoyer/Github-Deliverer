@@ -7,23 +7,14 @@
 import * as Discord from "discord.js"
 import * as Config from "./.config.json"
 
-import { Command, getCommand } from "./commands"
+import { UserInput, getUserInput, getCommands, botMentionned } from "./commands"
 
 export const client: Discord.Client = new Discord.Client();
 
-function botMentionned(message: Discord.Message): boolean
-{
-    if (message.mentions.users.find(user => user.tag === client.user.tag)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
 function run(): void
 {
-    let command: Command;
+    const commands: Discord.Collection<String, any> = getCommands();
+    let usr_cmd: UserInput;
 
     console.log(`\n> ${client.user.tag} now up!\n`);
 
