@@ -15,6 +15,7 @@ function run(): void
 {
     const commands: Discord.Collection<String, any> = getCommands();
     let usr_cmd: UserInput;
+    let module: any;
 
     console.log(`\n> ${client.user.tag} now up!\n`);
 
@@ -23,15 +24,15 @@ function run(): void
             return;
         }
 
-        command = getCommand(message);
-
-        if (command.name === "args-info") {
-            if (!command.args.length) {
-                message.reply(`you didn't provide arguments to watch !`);
-            }
-            else {
-                message.reply(`there yours ${command.name}!\n> > ${command.args}`);
-            }
+        usr_cmd = getUserInput(message);
+        
+        try {
+            module = commands.get(usr_cmd.name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(usr_cmd.name));
+            module.exec(message, usr_cmd);
+        }
+        catch (error) {
+            console.error(error);
+            message.reply("I didn't understand your request :(\nCan you check your syntax ?\nYou can ask me some assistance with the \"help\" keyword ;)");
         }
     });
 }
@@ -39,3 +40,10 @@ function run(): void
 client.once('ready', run);
 
 client.login(Config.auth_token).catch(str => console.log(`Error: Login failed\n> Invalid token: ${str}`));
+
+process.on("unhandledRejection", function(reason) {
+    console.log(
+        "ERROR: Unhandled promise rejection\n",
+        `\t${reason}`
+    );
+})
