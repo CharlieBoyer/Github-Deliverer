@@ -4,7 +4,9 @@
 ** Author: charlieBoyer
 */
 
-import { Message } from "discord.js";
+import * as fs from "fs";
+
+import { Collection, Message } from "discord.js";
 import { mention_code } from "./.config.json";
 
 export type UserInput = {
@@ -30,4 +32,26 @@ export function getUserInput(message: Message): UserInput
     let userInput: UserInput = { name: cmd, args: args };
 
     return userInput;
+}
+
+export function getCommands(): Collection<String, any>
+{
+    const commandList: Collection<String, any> = new Collection();
+    let commandFiles: String[];
+    let command: any;
+
+    const commandFolders = fs.readdirSync(__dirname + "/commands").filter(folder => !folder.includes(".js"));
+
+    for (const folder of commandFolders)
+    {
+        commandFiles = fs.readdirSync(__dirname + `/commands/${folder}`).filter(file => file.endsWith('.js'));
+
+        for (const file of commandFiles)
+        {
+            command = require(`./commands/${folder}/${file}`);
+            commandList.set(command.name, command);
+        }
+    }
+
+    return commandList;
 }
