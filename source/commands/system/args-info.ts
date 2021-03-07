@@ -15,13 +15,11 @@ module.exports = {
 
     exec(message: Message, command: UserInput): void
     {
-        if (command.name === "args-info") {
-            if (!command.args.length) {
-                message.reply(`you didn't provide me arguments to watch !`);
-            }
-            else {
-                message.reply(`there yours ${command.name}!\n> > ${command.args}`);
-            }
+        if (!command.args.length) {
+            message.reply(`you didn't provide me arguments to watch !`);
+        }
+        else {
+            message.reply(`there yours ${command.name}!\n> > ${command.args}`);
         }
     }
 }
