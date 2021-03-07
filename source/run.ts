@@ -1,6 +1,6 @@
 /*
 ** Github Deliverer
-** Bot launch and log-in it to Discord servers
+** Start-up the bot and log-in it to Discord servers
 ** Author: charlieBoyer
 */
 
@@ -9,7 +9,7 @@ import * as Config from "./.config.json"
 
 import { UserInput, getUserInput, getCommands, botMentionned } from "./commands"
 
-export const client: Discord.Client = new Discord.Client();
+const client: Discord.Client = new Discord.Client();
 
 function run(): void
 {
@@ -25,14 +25,23 @@ function run(): void
         }
 
         usr_cmd = getUserInput(message);
-        
+
         try {
             module = commands.get(usr_cmd.name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(usr_cmd.name));
             module.exec(message, usr_cmd);
         }
         catch (error) {
-            console.error(error);
-            message.reply("I didn't understand your request :(\nCan you check your syntax ?\nYou can ask me some assistance with the \"help\" keyword ;)");
+            if (usr_cmd.name === "") {
+                message.reply(`check out what I can do for you by typing: <@!${Config.id}> help`);
+            }
+            else {
+                console.error(`> Invalid command: ${usr_cmd.name}.`);
+                message.reply(
+                    "I didn't understand your request :(\n"
+                    + `Check the spelling by typing: <@!${Config.id}> help\n`
+                    + `If the spelling is correct, see the feature usage like that: <@!${Config.id}> help <feature>`
+                );
+            }
         }
     });
 }
