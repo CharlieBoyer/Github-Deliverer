@@ -60,3 +60,23 @@ export function getCommands(): Collection<String, any>
 
     return commandList;
 }
+
+export function follow(usr_msg: Message)
+{
+    const commands: Collection<String, any> = getCommands();
+    let usr_cmd: UserInput = getUserInput(usr_msg);
+    let module: any;
+
+    try {
+        module = commands.get(usr_cmd.name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(usr_cmd.name));
+        module.exec(usr_msg, usr_cmd);
+    }
+    catch (exception: any)
+    {
+        if (usr_cmd.name === "")
+            usr_msg.reply(`check out what I can do for you by typing:\n> ${tag} help`);
+        else
+            throw new UserInputException(`\"${usr_cmd.name}\" doesn't exist in command collection`);
+    }
+
+}
