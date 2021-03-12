@@ -7,7 +7,8 @@
 import * as fs from "fs";
 
 import { Collection, Message } from "discord.js";
-import { mention_code } from "./.config.json";
+import { UserInputException } from "./error/UserInputException";
+import { tag } from "./.config.json";
 
 export type UserInput = {
     name: String,
@@ -26,10 +27,14 @@ export function botMentionned(message: Message): boolean
 
 export function getUserInput(message: Message): UserInput
 {
-    let args: String[] = message.content.slice(mention_code.length).trim().split(/ +/);
+    let args: String[] = message.content.slice(tag.length).trim().split(/ +/);
     let cmd: String = args.shift().toLowerCase();
 
     let userInput: UserInput = { name: cmd, args: args };
+
+    if (userInput.name == undefined) {
+        throw new UserInputException("Undefined command name");
+    }
 
     return userInput;
 }

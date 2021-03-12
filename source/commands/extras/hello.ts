@@ -8,12 +8,12 @@ import { Message } from "discord.js";
 import { UserInput } from "../../commands";
 
 import { random } from "../../utilities";
-import { id } from "../../.config.json";
+import { tag } from "../../.config.json";
 
 module.exports = {
     name: "hello",
     aliases: ["ping", "hey"],
-    usage: `<@!${id}> hello`,
+    usage: `${tag} hello`,
     description: "say hello to you :)",
 
     exec(message: Message, command: UserInput): void

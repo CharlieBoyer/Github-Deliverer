@@ -6,12 +6,12 @@
 
 import { Message } from "discord.js";
 import { UserInput } from "../../commands";
-import { id } from "../../.config.json";
+import { tag } from "../../.config.json";
 
 module.exports = {
     name: "args-info",
     description: "process your sentence and display it, splitted.",
-    usage: `<@!${id}> args-info <anything ...>`,
+    usage: `${tag} args-info <anything ...>`,
 
     exec(message: Message, command: UserInput): void
     {

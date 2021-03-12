@@ -6,7 +6,7 @@
 
 import { Collection, Message } from "discord.js";
 import { UserInput, getCommands } from "../../commands";
-import { id } from "../../.config.json";
+import { tag } from "../../.config.json";
 
 function concatHelp(list: Collection<String, any>): String
 {
@@ -44,8 +44,8 @@ module.exports = {
                 `Hey <@!${message.author.id}> ! I'm Github Deliverer and there is what I can do !\n`
                 + `${helpString}`
                 + `\n`
-                + `Just ask me anything like that: <@!${id}> \`<command>\` [options]\n`
-                + `Get more details about something by typing: <@!${id}> help \`<command>\``
+                + `Just ask me anything like that: ${tag} \`<command>\` [options]\n`
+                + `Get more details about something by typing: ${tag} help \`<command>\``
             );
         }
     }
