@@ -18,7 +18,11 @@ function run(): void
     console.log(`\n> ${client.user.tag} now up!\n`);
 
     client.on('message', message => {
-        if (!botMentionned(message) || message.author.bot) {
+        if (!botMentionned(message)) {
+            return;
+        }
+        else if (message.author.bot) {
+            message.channel.send(`Our kind shouldn't use human communication, number <${message.author.id}>.`);
             return;
         }
 
