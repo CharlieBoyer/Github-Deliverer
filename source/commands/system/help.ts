@@ -23,19 +23,19 @@ module.exports = {
     name: "help",
     description: "display my features or the usage of a specific one ;)",
 
-    exec(message: Message, command: UserInput)
+    exec(message: Message, usr_cmd: UserInput)
     {
         const commandList: Collection<String, any> = getCommands();
-        const specific: any = commandList.get(command.args[0]);
+        const command: any = commandList.get(usr_cmd.args[0]);
         const helpString: String = concatHelp(commandList);
 
-        if (specific != undefined && specific.name != "help")
+        if (command != undefined && command.name != "help")
         {
-            if (specific.aliases)
-                specific.usage += `\nYou can also use: \`${specific.aliases.join("\` ; \`")}\` instead of \`${specific.name}\``;
+            if (command.aliases)
+                command.usage += `\nYou can also use: \`${command.aliases.join("\` ; \`")}\` instead of \`${command.name}\``;
 
             message.reply(
-                `use \`${specific.name}\` like that: ${specific.usage}.`
+                `use \`${command.name}\` like that: ${command.usage}.`
             );
         }
         else
