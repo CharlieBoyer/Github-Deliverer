@@ -4,19 +4,17 @@
 ** Author: charlieBoyer
 */
 
-import * as Discord from "discord.js"
-import * as Config from "./.config.json"
+import * as Discord from "discord.js";
+import * as Config from "./.config.json";
 
-import { UserInput, getUserInput, getCommands, botMentionned } from "./commands"
+import { UserInputException } from "./error/UserInputException";
+import { GeneralException } from "./error/GeneralException";
+import { UserInput, getUserInput, getCommands, botMentionned, follow } from "./commands";
 
 const client: Discord.Client = new Discord.Client();
 
 function run(): void
 {
-    const commands: Discord.Collection<String, any> = getCommands();
-    let usr_cmd: UserInput;
-    let module: any;
-
     console.log(`\n> ${client.user.tag} now up!\n`);
 
     client.on('message', message => {
@@ -24,23 +22,16 @@ function run(): void
             return;
         }
 
-        usr_cmd = getUserInput(message);
-
         try {
-            module = commands.get(usr_cmd.name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(usr_cmd.name));
-            module.exec(message, usr_cmd);
+            follow(message);
         }
-        catch (error) {
-            if (usr_cmd.name === "") {
-                message.reply(`check out what I can do for you by typing: <@!${Config.id}> help`);
+        catch (except) {
+            if (except instanceof UserInputException) {
+                except.what();
+                except.hint(message);
             }
             else {
-                console.error(`> Invalid command: ${usr_cmd.name}.`);
-                message.reply(
-                    "I didn't understand your request :(\n"
-                    + `Check the spelling by typing: <@!${Config.id}> help\n`
-                    + `If the spelling is correct, see the feature usage like that: <@!${Config.id}> help <feature>`
-                );
+                throw except;
             }
         }
     });
@@ -51,8 +42,10 @@ client.once('ready', run);
 client.login(Config.auth_token).catch(str => console.log(`Error: Login failed\n> Invalid token: ${str}`));
 
 process.on("unhandledRejection", function(reason) {
-    console.log(
-        "ERROR: Unhandled promise rejection\n",
+    new GeneralException("Unhandled promise rejection", `${reason}`, false);
+    console.error(
+        "CRITICAL ERROR: Unhandled promise rejection\n",
         `\t${reason}`
     );
+    throw new GeneralException("Unhandled promise rejection", `${reason}`, false);
 })
