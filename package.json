@@ -1,6 +1,6 @@
 {
   "name": "github-deliverer",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "A Discord app interacting with Github API",
   "main": "./build/run.js",
   "scripts": {
