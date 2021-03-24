@@ -9,7 +9,8 @@ import * as Config from "./.config.json";
 
 import { UserInputException } from "./error/UserInputException";
 import { GeneralException } from "./error/GeneralException";
-import { UserInput, getUserInput, getCommands, botMentionned, follow } from "./commands";
+
+import { botMentionned, follow } from "./commands";
 
 const client: Discord.Client = new Discord.Client();
 
@@ -18,7 +19,7 @@ function run(): void
     console.log(`\n> ${client.user.tag} now up!\n`);
 
     client.on('message', message => {
-        if (!botMentionned(message)) {
+        if (!botMentionned(message) || message.author == message.client.user) {
             return;
         }
         else if (message.author.bot) {
